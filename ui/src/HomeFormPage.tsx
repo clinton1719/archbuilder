@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { setFormData } from './slices/formSlice';
 import type { FormData } from './types/FormData';
+import { useGetRecommendationsQuery } from './slices/apis/getRecommendations';
 
 export function HomeFormPage() {
   const { register, handleSubmit } = useForm<FormData>();
@@ -19,6 +20,14 @@ export function HomeFormPage() {
 
   const onSubmit = (data: FormData) => {
     dispatch(setFormData(data));
+    const { data: recommendations, error } = useGetRecommendationsQuery(data);
+    if (error) {
+      console.error('Error fetching recommendations:', error);
+      return;
+    }
+    if (recommendations) {
+      console.log('Recommendations:', recommendations);
+    }
     navigate('/add-services');
   };
 

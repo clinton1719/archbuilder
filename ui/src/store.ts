@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import formReducer from './slices/formSlice'
+import recommendationReducer from './slices/recommendationSlice'
+import { recommendationsApi } from './slices/apis/getRecommendations'
 
 
 export const store = configureStore({
     reducer: {
-        form: formReducer   
+        form: formReducer,
+        recommendation: recommendationReducer,
+        [recommendationsApi.reducerPath]: recommendationsApi.reducer,
     },
 })
 
