@@ -32,7 +32,7 @@ rule "Recommend Event-Driven Architecture"
         answers : UserAnswers(
             responsiveness == "eventual",
             communication == "asynchronous" || communication == "mixed",
-            frequencyOfChange == "continuous" || frequencyOfChange == "regular",
+            frequencyOfChange == "continuous" || frequencyOfChange == "regular"
         )
     then
         Recommendation recommendation = new Recommendation();
