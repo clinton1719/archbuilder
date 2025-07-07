@@ -1,0 +1,15 @@
+{
+  "name": "archbuilder",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "ui": "pnpm --filter ui run dev",
+    "build": "pnpm --filter ui run build",
+    "lint": "pnpm --filter ui run lint",
+    "preview": "pnpm --filter ui run preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.4"
+}
