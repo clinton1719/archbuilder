@@ -10,6 +10,7 @@ export const recommendationsApi = createApi({
         url: 'get-recommendations',
         method: 'POST',
         body: formData,
+        timeout: 30000
       }),
     }),
   }),

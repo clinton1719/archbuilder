@@ -1,0 +1,52 @@
+package com.clinton.archbuilder.rules
+
+import com.clinton.archbuilder.model.UserAnswers
+import com.clinton.archbuilder.model.Recommendation
+import java.util.HashSet
+import java.util.Set
+
+// Rule 1: Recommend Monolithic Architecture
+rule "Recommend Monolithic Architecture"
+    salience 100
+    when
+        answers : UserAnswers(
+            scaleExpectation == "small" || scaleExpectation == "medium",
+            applicationComplexity == "small" || applicationComplexity == "growing",
+            frequencyOfChange == "infrequent" || frequencyOfChange == "regular",
+            businessTransactionsComplexity == "simple" || businessTransactionsComplexity == "moderate",
+            technologyStack == "homogeneous"
+        )
+        not UserAnswers(
+            availability == "extremelyHigh" || availability == "veryHigh"
+        )
+    then
+        Recommendation recommendation = new Recommendation();
+        recommendation.addPattern("Monolithic Architecture");
+        insert(recommendation);
+end
+
+// Rule 2: Recommend Event-Driven Architecture (EDA)
+rule "Recommend Event-Driven Architecture"
+    salience 90
+    when
+        answers : UserAnswers(
+            responsiveness == "eventual",
+            communication == "asynchronous" || communication == "mixed",
+            frequencyOfChange == "continuous" || frequencyOfChange == "regular",
+        )
+    then
+        Recommendation recommendation = new Recommendation();
+        recommendation.addPattern("Event-Driven Architecture (EDA)");
+        insert(recommendation);
+end
+
+// Default rule if no specific pattern is found or to add a general advice
+rule "No Specific Pattern Recommendation"
+    salience 0 
+    when
+        not Recommendation() 
+    then
+        Recommendation recommendation = new Recommendation();
+        recommendation.setExplanation("Based on your inputs, a single dominant pattern isn't immediately clear. Consider consulting an architect for a tailored solution.");
+        insert(recommendation);
+end
